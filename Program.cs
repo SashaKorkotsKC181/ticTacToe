@@ -6,7 +6,7 @@ namespace ticTacToe
     class Program
     {
         static readonly int n = 4;
-        static readonly int forVin = 4;
+        static readonly int forWin = 4;
         static string BuidStringHorizontalLine(int weight)
         {
             string line = "";
@@ -16,7 +16,7 @@ namespace ticTacToe
             } 
             return line;
         }
-        static void Draw(int[,] field)
+        static void DrawField(int[,] field)
         {
             Console.Clear();
             for (int i = 0; i < field.GetLength(0); i++)
@@ -49,19 +49,19 @@ namespace ticTacToe
         static bool IsVictory(int x, int y, int team, int[,] field)
         {            
 
-            int counthorizontal = 0;
+            int counthorizontal = 1;
             bool r = true;
             bool l = true;
-            int countVertical = 0;
+            int countVertical = 1;
             bool u = true;
             bool d = true;
-            int countDiagonalLeft = 0;
+            int countDiagonalLeft = 1;
             bool dlu = true;
             bool dld = true;
-            int countDiagonalRight = 0;
+            int countDiagonalRight = 1;
             bool dru = true;
             bool drd = true;
-            for (int i = 0; i < forVin; i++)
+            for (int i = 1; i < forWin; i++)
             {                   
                 if (dlu && x - i >= 0 && y + i < field.GetLength(1) && field[x - i,y + i] == team)
                 {
@@ -130,7 +130,7 @@ namespace ticTacToe
                 }
 
             }
-            return counthorizontal > forVin || countVertical > forVin || countDiagonalRight > forVin || countDiagonalLeft > forVin; 
+            return counthorizontal >= forWin || countVertical >= forWin || countDiagonalRight >= forWin || countDiagonalLeft >= forWin; 
         }
         static void CheckInputCoordinates(ref int inputX, ref int inputY, int[,] field, int team)
         {
@@ -160,7 +160,7 @@ namespace ticTacToe
             int inputX = 0;
             int inputY = 0;
             int team = 1;
-            Draw(field);
+            DrawField(field);
             do
             {
                 if (IsDraw(checkRow, field))
@@ -178,7 +178,7 @@ namespace ticTacToe
                 } while(!(field[inputX, inputY] == 0));                
                 checkRow++;
                 field[inputX, inputY] = team;
-                Draw(field);
+                DrawField(field);
                 
             }
             while(!IsVictory(inputX,inputY,team,field));
